@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complify | Trust Layer for SME Compliance</title>
+  <style>
+    :root {
+      --navy: #0d2742;
+      --navy-2: #071d33;
+      --navy-3: #1b3045;
+      --teal: #18c7bd;
+      --teal-dark: #0fa9a2;
+      --cyan: #9ef6ef;
+      --text: #f7fbff;
+      --muted: #6b7f94;
+      --soft: #f4f8fb;
+      --line: #e7eef4;
+      --shadow: 0 24px 70px rgba(16, 38, 63, 0.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f8fbfd 0%, #edf3f7 100%);
+      color: var(--navy);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 11%;
+      background: #1b3045;
+      color: white;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    }
+    .brand { display: flex; align-items: center; gap: 14px; font-size: 26px; font-weight: 950; letter-spacing: -0.5px; }
+    .brand-badge {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--teal), #0b978f);
+      color: white;
+      font-size: 30px;
+      font-weight: 950;
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; color: #cbd7e2; font-weight: 750; }
+    .nav-links a:hover { color: white; }
+
+    .section { width: min(76%, 1180px); margin: 70px auto; }
+    .full-section { width: 100%; padding: 78px 0; }
+    .center { text-align: center; }
+    .eyebrow {
+      color: var(--teal);
+      font-weight: 950;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+    .section-title {
+      font-size: clamp(38px, 4.3vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+      font-weight: 950;
+    }
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 19px;
+      font-weight: 650;
+      max-width: 760px;
+      margin: 0 auto 34px;
+    }
+
+    .hero-wrap { background: linear-gradient(135deg, #08213a 0%, #0d2742 58%, #0e5960 100%); color: white; }
+    .hero {
+      width: min(76%, 1180px);
+      margin: 0 auto;
+      min-height: 650px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 54px;
+      align-items: center;
+      padding: 70px 0;
+    }
+    .hero h1 { font-size: clamp(50px, 6.2vw, 86px); line-height: 0.98; letter-spacing: -4px; margin-bottom: 24px; }
+    .hero p { max-width: 720px; font-size: 21px; color: #d7e3ee; font-weight: 650; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 30px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 24px; border-radius: 999px;
+      font-weight: 900; border: 1px solid rgba(255,255,255,.13);
+    }
+    .btn-primary { background: var(--teal); color: #062235; }
+    .btn-secondary { background: rgba(255,255,255,.10); color: white; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .tag { padding: 9px 14px; border-radius: 999px; background: rgba(255,255,255,.10); color: #d8e7f4; font-size: 14px; font-weight: 700; }
+
+    .hero-visual { border-radius: 34px; background: rgba(255,255,255,.11); padding: 24px; box-shadow: 0 28px 80px rgba(0,0,0,.26); }
+    .logo-panel { background: white; border-radius: 22px; padding: 18px; margin-bottom: 18px; }
+    .logo-panel img { width: 100%; border-radius: 16px; object-fit: cover; }
+    .trust-card { background: white; color: var(--navy); border-radius: 24px; padding: 28px; }
+    .trust-top { background: var(--navy); color: white; margin: -28px -28px 22px; padding: 24px 28px; border-radius: 24px 24px 0 0; }
+    .score-row { display: flex; gap: 22px; align-items: center; }
+    .ring {
+      width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center;
+      background: conic-gradient(var(--teal) 72%, #e7eef4 0);
+      position: relative; flex: 0 0 auto;
+    }
+    .ring::after { content: ""; position: absolute; width: 58px; height: 58px; border-radius: 50%; background: white; }
+    .ring strong { position: relative; z-index: 1; font-size: 28px; }
+    .score-row h3 { color: var(--teal-dark); font-size: 25px; }
+    .mini-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 22px; }
+    .mini-card { background: #f5f8fb; border: 1px solid var(--line); border-radius: 16px; padding: 16px; font-weight: 900; }
+    .mini-card span { display: block; color: var(--teal-dark); font-size: 22px; margin-top: 4px; }
+
+    .problem-wrap { background: #f2f7fb; }
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .light-card { padding: 28px; border-radius: 24px; background: white; box-shadow: 0 14px 40px rgba(16, 38, 63, 0.08); }
+    .light-card h3 { font-size: 23px; margin-bottom: 12px; color: var(--navy); }
+    .light-card p, .light-card li { color: #5f7184; font-weight: 650; }
+    .icon-box { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: rgba(24,199,189,.12); color: var(--teal-dark); font-size: 24px; margin-bottom: 18px; }
+
+    .solution-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 28px; align-items: stretch; }
+    .solution-card { background: var(--navy); color: white; border-radius: 28px; padding: 34px; box-shadow: var(--shadow); }
+    .bar { height: 16px; border-radius: 999px; background: rgba(255,255,255,.14); overflow: hidden; margin: 18px 0 16px; }
+    .bar span { display: block; height: 100%; width: 72%; background: var(--teal); }
+    .feature-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0 26px; }
+    .feature-buttons div { padding: 13px; border-radius: 14px; background: rgba(24,199,189,.16); color: var(--cyan); text-align: center; font-weight: 850; }
+    .steps { display: grid; gap: 16px; }
+    .step { display: grid; grid-template-columns: 54px 1fr; gap: 18px; padding: 25px; border-radius: 22px; background: #f8fbfd; border: 1px solid var(--line); }
+    .step-num { width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: white; display: grid; place-items: center; font-weight: 950; }
+    .step h3 { margin-bottom: 8px; }
+    .step p { color: #5f7184; font-weight: 650; }
+
+    .product-wrap { background: linear-gradient(120deg, #e9fbfb 0%, #f8fbfd 50%, #edf9fb 100%); }
+    .product-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; align-items: stretch; }
+    .phone-card { background: white; border-radius: 24px; padding: 14px 14px 22px; box-shadow: 0 16px 46px rgba(16,38,63,.12); }
+    .phone-card img { width: 100%; height: 330px; object-fit: contain; border-radius: 18px; background: #eef4f8; }
+    .phone-card h3 { margin: 16px 4px 4px; font-size: 17px; }
+    .phone-card p { margin: 0 4px; color: #65768a; font-weight: 650; font-size: 14px; line-height: 1.45; }
+
+    .ecosystem { padding: 0; overflow: hidden; background: var(--navy-2); border-radius: 30px; color: white; box-shadow: var(--shadow); }
+    .ecosystem-inner { padding: 42px; border-top: 8px solid var(--teal); }
+    .ecosystem h2 { font-size: clamp(34px, 4vw, 54px); line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 12px; }
+    .ecosystem .subtitle { color: var(--teal); font-size: 22px; font-weight: 900; margin-bottom: 28px; }
+    .ecosystem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .ecosystem-card { position: relative; min-height: 330px; padding: 72px 32px 32px; border-radius: 20px; background: #0f3044; border: 1px solid rgba(255,255,255,.06); }
+    .ecosystem-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 8px; background: var(--teal); border-radius: 20px 20px 0 0; }
+    .card-tag { position: absolute; top: 20px; left: 22px; right: 22px; text-align: center; border-radius: 8px; padding: 10px 12px; font-weight: 900; color: white; font-size: 14px; }
+    .tag-blue { background: #237f9c; } .tag-gold { background: #9b7b00; } .tag-green { background: #1f7a59; }
+    .ecosystem-card h3 { font-size: 24px; margin-bottom: 20px; }
+    .ecosystem-card p { color: #a8bdcf; font-size: 16px; font-weight: 650; line-height: 1.72; }
+    .takeaway { margin-top: 24px; padding: 28px 32px; border-radius: 20px; background: var(--teal); color: #062235; font-size: 21px; font-weight: 850; line-height: 1.55; }
+
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .why-card { border-top: 5px solid var(--teal); min-height: 190px; }
+
+    .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .pricing-card { padding: 28px; border-radius: 24px; background: white; border: 1px solid var(--line); box-shadow: 0 12px 32px rgba(16,38,63,.06); }
+    .pricing-card.featured { background: var(--navy); color: white; transform: translateY(-10px); }
+    .pricing-card ul { margin-top: 18px; padding-left: 20px; color: #5f7184; font-weight: 700; }
+    .pricing-card.featured ul { color: #d7e3ee; }
+
+    .cta { background: var(--navy-2); color: white; text-align: center; padding: 82px 20px; }
+    .cta h2 { font-size: clamp(40px, 5vw, 62px); line-height: 1.05; letter-spacing: -2px; max-width: 920px; margin: 0 auto 20px; }
+    .cta p { color: #d7e3ee; font-size: 19px; font-weight: 650; max-width: 780px; margin: 0 auto 28px; }
+    .footer { padding: 28px; background: #071d33; color: #cbd7e2; text-align: center; font-weight: 700; }
+
+    @media (max-width: 1180px) {
+      .section, .hero { width: min(92%, 1100px); }
+      .product-grid { grid-template-columns: repeat(3, 1fr); }
+      .pricing-grid, .why-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 850px) {
+      .navbar { padding: 16px 6%; flex-direction: column; align-items: flex-start; gap: 16px; }
+      .nav-links { flex-wrap: wrap; gap: 14px; }
+      .hero, .solution-layout { grid-template-columns: 1fr; }
+      .card-grid, .ecosystem-grid, .product-grid, .pricing-grid, .why-grid { grid-template-columns: 1fr; }
+      .hero h1 { letter-spacing: -2px; }
+      .ecosystem-inner { padding: 28px 20px; }
+      .product-grid .phone-card img { height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="brand" href="#top" aria-label="Complify home">
+      <span class="brand-badge">✓</span>
+      <span>Complify</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#product">Product</a>
+      <a href="#ecosystem">Why it works</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero-wrap">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Trust layer for SME compliance</div>
+          <h1>Know what your business is missing before it becomes expensive.</h1>
+          <p>
+            Complify is an AI-powered compliance intelligence platform that helps SMEs understand obligations,
+            manage documents, track deadlines, and build a trusted business profile.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#product">View Product Demo</a>
+            <a class="btn btn-secondary" href="#ecosystem">How it works</a>
+          </div>
+          <div class="hero-tags">
+            <span class="tag">Rules-first compliance</span>
+            <span class="tag">AI guidance</span>
+            <span class="tag">Document intelligence</span>
+            <span class="tag">Expert review path</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="logo-panel">
+            <img src="images/logo.jpg" alt="Complify logo">
+          </div>
+          <div class="trust-card">
+            <div class="trust-top">
+              <strong>SME Trust Profile</strong>
+              <p>Al Noor Trading · Bahrain</p>
+            </div>
+            <div class="score-row">
+              <div class="ring"><strong>72</strong></div>
+              <div>
+                <h3>Good Progress</h3>
+                <p>Complete priority actions to reduce risk and improve readiness.</p>
+              </div>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card">Missing Documents <span>5</span></div>
+              <div class="mini-card">Deadlines <span>3</span></div>
+              <div class="mini-card">Risk Alerts <span>2</span></div>
+              <div class="mini-card">Verified Status <span>Basic</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="full-section problem-wrap" id="problem">
+      <div class="section center">
+        <h2 class="section-title">The problem</h2>
+        <p class="section-subtitle">SMEs do not lack ambition. They lack affordable compliance infrastructure.</p>
+        <div class="card-grid">
+          <div class="light-card center">
+            <div class="icon-box">⌕</div>
+            <h3>Unclear obligations</h3>
+            <p>SMEs handle customer data, invoices, websites, employees, and registration, but often do not know which rules apply.</p>
+          </div>
+          <div class="light-card center">
+            <div class="icon-box">×</div>
+            <h3>Manual and expensive help</h3>
+            <p>Consultants are useful, but routine first-level guidance is still too costly for many small businesses.</p>
+          </div>
+          <div class="light-card center">
+            <div class="icon-box">!</div>
+            <h3>No living compliance record</h3>
+            <p>Static documents do not warn businesses about missing policies, deadlines, or readiness gaps before they become expensive.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="solution">
+      <div class="center">
+        <h2 class="section-title">The solution</h2>
+        <p class="section-subtitle">Complify turns compliance confusion into a trackable business trust profile.</p>
+      </div>
+      <div class="solution-layout">
+        <div class="solution-card">
+          <h2>Complify = SME Trust Layer</h2>
+          <p>A compliance intelligence platform that combines rules, verified knowledge, AI guidance, document automation, and expert review.</p>
+          <h3 style="margin-top:24px;">SME Trust Profile</h3>
+          <div class="bar"><span></span></div>
+          <h3>Readiness: 72/100</h3>
+          <div class="feature-buttons">
+            <div>Documents</div><div>Deadlines</div><div>Cyber Readiness</div><div>Expert Review</div>
+          </div>
+          <p style="color:var(--cyan);font-weight:900;">Core promise: know what your business is missing before it becomes expensive.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="step-num">01</div><div><h3>Business Profile</h3><p>A guided questionnaire captures industry, data use, website, invoices, employees, and selling behavior.</p></div></div>
+          <div class="step"><div class="step-num">02</div><div><h3>Compliance Mapping Engine</h3><p>Rule-based logic activates relevant modules: PDPL, VAT readiness, CR reminders, cyber basics, and documents.</p></div></div>
+          <div class="step"><div class="step-num">03</div><div><h3>AI Compliance Copilot</h3><p>Explains tasks in plain Arabic and English using verified compliance knowledge, not random guessing.</p></div></div>
+          <div class="step"><div class="step-num">04</div><div><h3>Document Intelligence</h3><p>Generates policy drafts and flags missing clauses or risky gaps for review.</p></div></div>
+          <div class="step"><div class="step-num">05</div><div><h3>Expert Review + Verified Badge</h3><p>High-risk cases go to experts. Completed businesses can build a Complify Verified trust profile.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="full-section product-wrap" id="product">
+      <div class="section center">
+        <h2 class="section-title">Product preview</h2>
+        <p class="section-subtitle">A simple product flow: business profile → compliance score → AI Copilot → documents → verified trust profile.</p>
+        <div class="product-grid">
+          <article class="phone-card">
+            <img src="images/business-profile.jpg" alt="Complify business profile screen">
+            <h3>Business Profile</h3>
+            <p>SMEs answer simple questions so Complify can personalize guidance.</p>
+          </article>
+          <article class="phone-card">
+            <img src="images/dashboard.jpg" alt="Complify dashboard screen">
+            <h3>Dashboard</h3>
+            <p>Score, missing documents, risks, deadlines, and priority actions.</p>
+          </article>
+          <article class="phone-card">
+            <img src="images/ai-copilot.jpg" alt="Complify AI Copilot screen">
+            <h3>AI Copilot</h3>
+            <p>Plain-language guidance backed by verified compliance knowledge.</p>
+          </article>
+          <article class="phone-card">
+            <img src="images/documents.jpg" alt="Complify documents screen">
+            <h3>Documents</h3>
+            <p>Generate, upload, review, and track policies and checklists.</p>
+          </article>
+          <article class="phone-card">
+            <img src="images/verified-profile.jpg" alt="Complify verified profile screen">
+            <h3>Verified Profile</h3>
+            <p>A shareable trust profile for partners, investors, and incubators.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ecosystem">
+      <div class="center">
+        <h2 class="section-title">Why we are sure it will work</h2>
+        <p class="section-subtitle">The model is proven globally, locally relevant, safer by design, and scalable across the GCC.</p>
+      </div>
+      <div class="why-grid">
+        <div class="light-card why-card"><h3>Real pain</h3><p>Compliance requirements are unavoidable for SMEs handling data, invoices, employees, and registration.</p></div>
+        <div class="light-card why-card"><h3>Proven category</h3><p>Compliance automation platforms prove that businesses value trust-management infrastructure.</p></div>
+        <div class="light-card why-card"><h3>Safer by design</h3><p>Rules-first logic, verified knowledge, human-in-loop review, and readiness tracking reduce AI risk.</p></div>
+        <div class="light-card why-card"><h3>GCC expansion</h3><p>The same engine can expand using country-specific rule modules and industry compliance packs.</p></div>
+      </div>
+    </section>
+
+    <section class="section ecosystem">
+      <div class="ecosystem-inner">
+        <div class="eyebrow">Competition</div>
+        <h2>Every existing option solves part of the problem.</h2>
+        <p class="subtitle">Complify brings guidance, speed, and expert review together in one place.</p>
+        <div class="ecosystem-grid">
+          <article class="ecosystem-card">
+            <div class="card-tag tag-blue">Authoritative &amp; Official</div>
+            <h3>Government Portals</h3>
+            <p>Bahrain’s government portals such as Sijilat and LMRA provide accurate and trusted official information. They are essential for compliance, licensing, and business procedures.<br><br>Complify does not replace them — it helps SMEs understand what applies to them and organize the next steps clearly.</p>
+          </article>
+          <article class="ecosystem-card">
+            <div class="card-tag tag-gold">Fast &amp; Accessible</div>
+            <h3>Generic AI Tools</h3>
+            <p>AI tools are useful for quick explanations and document drafting. However, they are not built specifically around Bahrain’s SME compliance journey.<br><br>Complify adds structure, reminders, and a Bahrain-focused compliance workflow.</p>
+          </article>
+          <article class="ecosystem-card">
+            <div class="card-tag tag-green">Accurate &amp; Reliable</div>
+            <h3>Consultants &amp; Experts</h3>
+            <p>Professional consultants provide valuable and accurate advice, especially for complex cases. For many SMEs, routine questions may not always require a full consultation.<br><br>Complify gives SMEs a first layer of guidance, with a path to expert review when needed.</p>
+          </article>
+        </div>
+        <div class="takeaway">Complify combines the strengths of official portals, AI speed, and expert support into one personalized compliance platform for Bahrain’s SMEs.</div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="center">
+        <h2 class="section-title">Business model</h2>
+        <p class="section-subtitle">Affordable entry for SMEs, stronger revenue through Pro tools, expert review, and B2B partnerships.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card"><h3>Free</h3><ul><li>Basic risk scan</li><li>Initial readiness score</li><li>Missing items summary</li></ul></div>
+        <div class="pricing-card"><h3>Starter</h3><ul><li>Full checklist</li><li>AI assistant</li><li>Deadline reminders</li></ul></div>
+        <div class="pricing-card featured"><h3>Pro</h3><ul><li>Document generator</li><li>Industry packs</li><li>Arabic/English support</li><li>Compliance dashboard</li></ul></div>
+        <div class="pricing-card"><h3>Expert</h3><ul><li>Human expert review</li><li>Verified document approval</li><li>Complify Verified badge</li></ul></div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>Compliance made simple, affordable, and trackable.</h2>
+      <p>Complify helps SMEs move from confusion to confidence with AI guidance, verified knowledge, document intelligence, and expert review.</p>
+      <a class="btn btn-primary" href="#top">Back to top</a>
+    </section>
+  </main>
+
+  <footer class="footer">Complify · The Trust Layer for SME Compliance</footer>
+</body>
+</html>
